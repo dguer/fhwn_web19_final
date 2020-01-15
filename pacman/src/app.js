@@ -3,6 +3,7 @@
 const pilltime = 6000
 // Set how many miliseconds between each time the ghosts move
 const ghostTimePerMove = 300
+var lifeCount = 3
 // Defining the ghosts paramters.
 //---------------------------------------------------------------------
 // Used in algorithams to move ghosts and pacman
@@ -29,7 +30,7 @@ let pacSoundId
 let highScoreNumber = 0
 // the   time to go along with the high score
 let highScoreTime = 0
-const death = new Audio('src/app/img/pacman_death.wav')
+const death = new Audio('./assets/audio/pacman_death.wav')
 
 const ghostOne = {
   //ghost intial starting position
@@ -133,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const score = document.querySelector('.score')
   const timer = document.querySelector('.timer')
   const start = document.querySelector('.start')
+  const life = document.querySelector('.life')
   const highScore = document.querySelector('.highScore')
   const left = document.querySelector('.left')
   const up = document.querySelector('.up')
@@ -144,13 +146,24 @@ document.addEventListener('DOMContentLoaded', () => {
   start.addEventListener('click', () => {
     // if it says start run the game for the first time.
     if (start.innerHTML === 'Start') {
+      
+      if(lifeCount>0){
       startGame()
       document.addEventListener('keyup', movePacMan)
       start.innerHTML = 'RUN!'
       infoBox.innerHTML = 'nice m8'
       start.style.backgroundColor = 'palevioletred'
+      alert('Hey Welcome,\nYou have '+lifeCount+ ' life..\n Enjoy!')
+      }else{
+      start.innerHTML = 'GAME OVER'
+      infoBox.innerHTML = 'Please refresh on the page!'
+
+      }
     // if it says play again? run the game 1st > time
     } else if (start.innerHTML === 'Play Again?') {
+
+      if(lifeCount>0){
+
       countUpid = setInterval(countUp, 1000)
       for( let i=0; i<16; i++) {
         clearInterval(caughtIdOne)
@@ -181,7 +194,13 @@ document.addEventListener('DOMContentLoaded', () => {
         start.innerHTML = 'RUN!'
         start.style.backgroundColor = 'palevioletred'
       }
+    }else{
+      alert('Game Over\nPlease refresh on the page!')
+      start.innerHTML = 'GAME OVER'
+      infoBox.innerHTML = 'Please refresh on the page!'
+
     }
+  }
   })
 
   // const layoutClasses = ['', 'wall', 'food', 'pacmanRight', 'pill', 'warp', 'ghostOne', 'ghostTwo', 'ghostThree', 'ghostFour']
@@ -257,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(checkWin, 200)
   // Function to play the Ghost sounds
   function pacSound(){
-    const move = new Audio('pacman_chomp.wav')
+    const move = new Audio('./assets/audio/pacman_chomp.wav')
     move.play()
   }
   //Function that moves packman using the arrow keys
@@ -392,6 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // This function is only used once to start the game and set the ghosts moving.
   function startGame() {
+    if(lifeCount>0){
     pacSoundId = setInterval(pacSound, 650)
     countUpid = setInterval(countUp, 1000)
     ghostMoveIdOne = setInterval(function(){
@@ -406,7 +426,10 @@ document.addEventListener('DOMContentLoaded', () => {
     ghostMoveIdFour = setInterval(function(){
       chooseAndMove(ghostFour)
     }, ghostTimePerMove)
+  }else{
+    alert('Game Over. Please refresh on page!')
   }
+}
   // this functions moves the ghosts by removing the class chaning the ghost
   // position index and the re adding the class to the new index
   // it is used to store all the previous moves of the ghosts
@@ -516,8 +539,14 @@ document.addEventListener('DOMContentLoaded', () => {
         highScoreNumber = scoreNumber
         highScoreTime = time
       }
-      highScore.innerHTML = `${highScoreNumber}ps in ${highScoreTime}s`
+      highScore.innerHTML = `${highScoreNumber} points in ${highScoreTime}sec`
       time = time + 0
+      life.innerHTML = lifeCount-1
+      lifeCount = lifeCount-1
+
+      if(lifeCount<1){
+        life.innerHTML = 'GAME OVER.'
+      }
       start.innerHTML = 'Play Again?'
       infoBox.innerHTML = 'PacMan Died.'
       start.style.backgroundColor = 'palevioletred'
