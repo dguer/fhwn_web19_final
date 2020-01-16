@@ -29,7 +29,5 @@ export class LoginComponent implements OnInit {
             error => { console.error(error); });
     }
 
-    logout() {
-        this.auth.token = '';
-    }
+ 
 }
