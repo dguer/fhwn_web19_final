@@ -118,10 +118,15 @@ const layout = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
   // Below this all code relies on the Dom
-  //accssing the grid
-  const grid = document.querySelector('.grid')
+  if(window.location.pathname !== '/home')
+  {
+    console.log('Return');
+        return;
+  }
+  const grid = document.querySelector('.grid') 
+  console.log({'Grid':window.location});
   //creating all the small squares within the grid
   for (let i = 0; i < layout.length; i++) {
     const div = document.createElement('div')
