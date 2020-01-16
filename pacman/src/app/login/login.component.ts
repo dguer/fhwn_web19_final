@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
             x => {
                 console.log(x);
                 this.auth.token = x.token;
+                alert('You are logged in! Go to Game!');
             },
             error => { console.error(error); });
     }
