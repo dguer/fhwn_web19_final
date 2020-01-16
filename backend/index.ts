@@ -28,9 +28,9 @@ export class Server {
         // - logging // TODO: #GDPR :-)
         // - generate token
         // - store tokens (further improvement: expire-time)
-        this.app.post('/home', (req, res) => {
-            if (req.body.username === "daniel" &&
-                req.body.password === "asdf") {
+        this.app.post('/signin', (req, res) => {
+            if (req.body.username === "test" &&
+                req.body.password === "test") {
                 console.log('  auth: ' + req.header('Authorization'));
                 let newToken = uuid() as string;
                 this.tokens.push(newToken);
@@ -44,7 +44,7 @@ export class Server {
         // make a data endpoint with
         // - Auth check
         // - logging
-        this.app.get('/data', (req, res) => {
+        this.app.get('/home', (req, res) => {
             let curToken = req.header('Authorization');
             console.log('  auth: ' + curToken);
             if (this.tokens.indexOf(curToken) === -1) {
@@ -52,8 +52,8 @@ export class Server {
                 res.status(401).json({ reason: 'not logged in' });
                 console.log('  do not return data');
             } else {
-                res.status(200).json(['img1', 'img2', 'img3']);
-                console.log('  data returned properly');
+                res.status(200).json(['logged in']);
+                console.log('  logged in');
             }
         });
 
