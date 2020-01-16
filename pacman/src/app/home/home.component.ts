@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../_services/auth.service';
 
 
 declare const PACMAN: any;
@@ -11,15 +13,16 @@ declare const PACMAN: any;
 export class HomeComponent implements OnInit {
 
 
-  constructor() {
+  constructor(private http: HttpClient, private auth: AuthService) {
 
    }
 
 
   ngOnInit() {
 
-
-
   }
 
+  logout() {
+    this.auth.token = '';
+}
 }

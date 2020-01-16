@@ -56,6 +56,21 @@ export class Server {
                 console.log('  logged in');
             }
         });
+                // make a data endpoint with
+        // - Auth check
+        // - logging
+        this.app.get('/login', (req, res) => {
+            let curToken = req.header('Authorization');
+            console.log('  auth: ' + curToken);
+            if (this.tokens.indexOf(curToken) === -1) {
+                // https://http.cat/401
+                res.status(401).json({ reason: 'Need to Login!' });
+                console.log('  not logged in');
+            } else {
+                res.status(200).json(['logged in']);
+                console.log('  logged in');
+            }
+        });
 
         // start the server on port 3000
         this.app.listen(3000, () => console.log('started at http://localhost:3000/'));
