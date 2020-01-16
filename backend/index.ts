@@ -49,8 +49,8 @@ export class Server {
             console.log('  auth: ' + curToken);
             if (this.tokens.indexOf(curToken) === -1) {
                 // https://http.cat/401
-                res.status(401).json({ reason: 'not logged in' });
-                console.log('  do not return data');
+                res.status(401).json({ reason: 'Need to Login!' });
+                console.log('  not logged in');
             } else {
                 res.status(200).json(['logged in']);
                 console.log('  logged in');
