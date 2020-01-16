@@ -24,5 +24,9 @@ export class HomeComponent implements OnInit {
 
   logout() {
     this.auth.token = '';
+    window.location.replace ("/");
+    //window.history.back();
+   
+ 
 }
 }
